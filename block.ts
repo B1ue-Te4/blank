@@ -16,7 +16,7 @@ export class Block_T implements Block {
     y: number;
     rotation: number;
 
-    consructor(){
+    constructor(){
         this.entity =[[0,1,0],[1,1,1],[0,0,0]];
         this.x = 0;
         this.y = 0;
