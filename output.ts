@@ -1,4 +1,14 @@
 import { Block_T } from "./block";
-console.log("test")
-let blkIns = new Block_T;
-console.log(blkIns.x)
+
+class field {
+    entity: number[][]
+
+    constructor() {
+        this.entity = new Array(5)
+    }
+}
+
+let fld = new field
+let fld
+
+console.log(test)
