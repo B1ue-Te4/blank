@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${file}",
-            "runtimeExecutable": "${workspace}/node_modules/ts-node"
+            "runtimeArgs": ["--nolazy", "-r", "ts-node/register"]
         }
     ]
 }
