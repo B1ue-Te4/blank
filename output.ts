@@ -5,7 +5,7 @@ class field {
     entity: number[][]
 
     constructor() {
-        this.entity = Geenerate2DArray(20,10)
+        this.entity = Generate2DArray(20,10)
     }
 }
 
