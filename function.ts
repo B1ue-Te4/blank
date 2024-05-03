@@ -1,9 +1,3 @@
-export function calculation(num1: number, num2: number) {
-    const answer: number[] = [
-      num1 + num2,
-      num1 - num2,
-      num1 * num2,
-      num1 / num2,
-    ]
-    return answer;
+export function Generate2DArray (m: number, n: number, val: number = 0) {
+    return [...Array(m)].map(_ => Array(n).fill(val));
   }

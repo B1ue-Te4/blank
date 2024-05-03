@@ -1,14 +1,14 @@
+import { Generate2DArray } from "./function";
 import { Block_T } from "./block";
 
 class field {
     entity: number[][]
 
     constructor() {
-        this.entity = new Array(5)
+        this.entity = Geenerate2DArray(20,10)
     }
 }
 
 let fld = new field
-let fld
 
-console.log(test)
+console.log(fld.entity)
