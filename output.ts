@@ -1,4 +1,5 @@
 import { Generate2DArray } from "./function";
+import { Visualize2DArray} from "./function";
 import { Block_T } from "./block";
 
 class field {
@@ -10,5 +11,3 @@ class field {
 }
 
 let fld = new field
-
-console.log(fld.entity)
