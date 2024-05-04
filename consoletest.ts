@@ -1,16 +1,23 @@
-let count: number = 0
+import * as readline from "readline";
 
-while (count < 10) {
-    count = count + 1
+function waitanime(): void {
 
-    //console.clear();
+    readline.clearLine;
+    readline.cursorTo(process.stdout,0);
     process.stdout.write("|");
-    //console.clear();
+    readline.clearLine;
+    readline.cursorTo(process.stdout,0);
     process.stdout.write("/");
-    //console.clear();
+    readline.clearLine;
+    readline.cursorTo(process.stdout,0);
     process.stdout.write("-");
-    //console.clear();
+    readline.clearLine;
+    readline.cursorTo(process.stdout,0);
     process.stdout.write("\\");
-    //console.clear();
-    process.stdout.write("|")
+    readline.clearLine;
+    readline.cursorTo(process.stdout,0);
+    process.stdout.write("|");
+
 };
+
+setInterval(() => console.log(new Date()),10)
