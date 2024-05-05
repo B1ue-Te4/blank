@@ -35,10 +35,10 @@ export class Block_T implements Block {
                 this.entity = [[0,0,0],[1,1,1],[0,1,0]];
             case 3:
                 this.entity = [[0,1,0],[1,1,0],[0,1,0]];
-        }
-    }
+        };
+    };
 
-    down() {this.y = this.y - 1}
-    left() {this.x = this.x - 1}
-    right() {this.x = this.x + 1}
+    down() {this.y = this.y - 1};
+    left() {this.x = this.x - 1};
+    right() {this.x = this.x + 1};
 }
