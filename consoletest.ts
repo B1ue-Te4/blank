@@ -20,4 +20,4 @@ function waitanime(): void {
 
 };
 
-setInterval(() => console.log(new Date()),10)
+setInterval(() => console.log(new Date().),10)
