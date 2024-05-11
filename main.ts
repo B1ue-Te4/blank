@@ -1,20 +1,12 @@
 import readline from "readline";
-import keypress from "keypress.js";
 import { Generate2DArray } from "./function";
 import { Visualize2DArray} from "./function";
 import { Block_T } from "./block";
 
-const kp = new keypress.Listener()
+readline.emitKeypressEvents(process.stdin);
 
-process.stdin.on('keypress', function (ch, key) {
-    console.log('got "keypress"', key);
-    if (key && key.ctrl && key.name == 'c') {
-      process.stdin.pause();
-    }
-});
-
-process.stdin.setRawMode(true);
-process.stdin.resume();
+if (process.stdin.isTTY)
+    process.stdin.setRawMode(true);
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -23,14 +15,14 @@ const rl = readline.createInterface({
 
 const block = new Block_T;
 
-while (true) {
-rl.question("command?", input => {
-    if (input === "spin") {
-        block.spin();
-        readline.clearLine(process.stdin,0)
-        rl.pause
-        rl.write(Visualize2DArray(block.entity));
-        rl.prompt();
-    };
+process.stdin.on('keypress', (str, key) => {
+      if(key.ctrl == true && key.name == 'c'){
+          process.exit()
+      };
+      if(key.name == "s"){
+        block.spin()
+      }
+      readline.clearScreenDown(process.stdout);
+      readline.cursorTo(process.stdout,0,0);
+      rl.write(Visualize2DArray(block.entity));
 });
-}

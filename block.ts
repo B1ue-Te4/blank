@@ -29,12 +29,16 @@ export class Block_T implements Block {
         switch (this.rotation) {
             case 0:
                 this.entity = [[0,1,0],[1,1,1],[0,0,0]];
+                break;
             case 1:
                 this.entity = [[0,1,0],[0,1,1],[0,1,0]];
+                break;
             case 2:
                 this.entity = [[0,0,0],[1,1,1],[0,1,0]];
+                break;
             case 3:
                 this.entity = [[0,1,0],[1,1,0],[0,1,0]];
+                break;
         };
     };
 
