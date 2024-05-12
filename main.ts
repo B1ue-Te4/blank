@@ -1,6 +1,7 @@
 import readline from "readline";
 import { Visualize2DArray} from "./function";
-import { Block_T } from "./block";
+import { Block_T } from "./object";
+import { Field } from "./object";
 
 readline.emitKeypressEvents(process.stdin);
 
@@ -13,6 +14,7 @@ const rl = readline.createInterface({
 });
 
 const block = new Block_T;
+const field = new Field;
 
 process.stdin.on('keypress', (str, key) => {
       if(key.ctrl == true && key.name == 'c'){
@@ -20,8 +22,9 @@ process.stdin.on('keypress', (str, key) => {
       };
       if(key.name == "s"){
         block.spin()
-      }
+      };
       readline.clearScreenDown(process.stdout);
       readline.cursorTo(process.stdout,0,0);
+
       rl.write(Visualize2DArray(block.entity));
 });
