@@ -63,13 +63,13 @@ export class Field {
     };
 
     loadBlock(objBlock: Block){
-        let X: number = objBlock.origin[0] + objBlock.move[0];
-        if(X < 0){X = 0};
-        if(X > this.width){X = this.width};
+        if(objBlock.origin[0] + objBlock.move[0] < 0){objBlock.move[0] = 0};
+        if(objBlock.origin[0] + objBlock.move[0] > this.width){objBlock.move[0] = this.width - 1};
+        const X: number = objBlock.origin[0] + objBlock.move[0];
 
-        let Y: number = objBlock.origin[1] + objBlock.move[1];
-        if(Y < 0){Y = 0};
-        if(Y > this.height){Y = this.height};
+        if(objBlock.origin[1] + objBlock.move[1] < 0){objBlock.move[1] = 0};
+        if(objBlock.origin[1] + objBlock.move[1] > this.height){objBlock.move[1] = this.height - 1};
+        const Y: number = objBlock.origin[1] + objBlock.move[1];
 
         this.entity = Generate2DArray(this.height,this.width);
         this.entity[Y][X] = 6;
