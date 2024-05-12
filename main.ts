@@ -1,5 +1,4 @@
 import readline from "readline";
-import { Generate2DArray } from "./function";
 import { Visualize2DArray} from "./function";
 import { Block_T } from "./block";
 
