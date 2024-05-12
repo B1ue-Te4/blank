@@ -1,8 +1,8 @@
-export function Generate2DArray (m: number, n: number, val: number = 0) {
+export function Generate2DArray (m: number, n: number, val: number = 0): number[][] {
   return [...Array(m)].map(_ => new Array(n).fill(val));
 };
 
-export function Visualize2DArray (array2D: number[][]) {
+export function Visualize2DArray (array2D: number[][]): string {
   let mapped: string = "";
 
   array2D.forEach((value) => {

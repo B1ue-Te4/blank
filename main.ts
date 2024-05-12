@@ -15,16 +15,35 @@ const rl = readline.createInterface({
 
 const block = new Block_T;
 const field = new Field;
+field.loadBlock(block)
 
 process.stdin.on('keypress', (str, key) => {
       if(key.ctrl == true && key.name == 'c'){
-          process.exit()
+          process.exit();
       };
+
+      if(key.name == "w"){
+        block.spin();
+        field.loadBlock(block);
+      };
+
       if(key.name == "s"){
-        block.spin()
+        block.down()
+        field.loadBlock(block);
+      }
+
+      if(key.name == "a"){
+        block.left();
+        field.loadBlock(block);
       };
+
+      if(key.name == "d"){
+        block.right();
+        field.loadBlock(block);
+      };
+
       readline.clearScreenDown(process.stdout);
       readline.cursorTo(process.stdout,0,0);
 
-      rl.write(Visualize2DArray(block.entity));
+      rl.write(Visualize2DArray(field.entity));
 });
