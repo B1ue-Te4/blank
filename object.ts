@@ -82,8 +82,8 @@ export class Field {
 
     materialize(){
         this.loadspace.forEach((block) => {
-            const x: number = block.origin[0] + block.move[0];
-            const y: number = block.origin[1] + block.move[1];
+            const x: number = this.origin[0] + block.origin[0] + block.move[0];
+            const y: number = this.origin[1] + block.origin[1] + block.move[1];
 
             block.entity.forEach((row,rowNum) => {
                 row.forEach((value,colNum) => this.entity[y + rowNum][x + colNum] = value);
