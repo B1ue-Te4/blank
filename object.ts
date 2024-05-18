@@ -86,7 +86,10 @@ export class Field {
             const y: number = this.origin[1] + block.origin[1] + block.move[1];
 
             block.entity.forEach((row,rowNum) => {
-                row.forEach((value,colNum) => this.entity[y + rowNum][x + colNum] = value);
+                row.forEach((value,colNum) => {
+                    const fieldValue = this.entity[y + rowNum][x + colNum];
+                    this.entity[y + rowNum][x + colNum] = value + fieldValue;
+                });
             });
         });
     };
