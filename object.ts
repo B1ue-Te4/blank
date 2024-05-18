@@ -22,7 +22,7 @@ export class Block_T implements Block {
     constructor(){
         this.origin = [0,0];
         this.move = [0,0];
-        this.entity =[[0,1,0],[1,1,1],[0,0,0]];
+        this.entity = [[0,1,0],[1,1,1],[0,0,0]];
         this.rotation = 0;
     }
 
@@ -45,7 +45,7 @@ export class Block_T implements Block {
         };
     };
 
-    up() {this.move[1] = this.move[1] -1 };
+    up() {this.move[1] = this.move[1] - 1};
     down() {this.move[1] = this.move[1] + 1};
     left() {this.move[0] = this.move[0] - 1};
     right() {this.move[0] = this.move[0] + 1};
@@ -55,16 +55,18 @@ export class Field {
     origin: number[];
     width: number;
     height: number;
+    loadspace: Block[];
     entity: number[][];
 
     constructor() {
         this.origin = [0,4];
         this.width = 10;
         this.height = 20;
+        this.loadspace = [];
         this.entity = Generate2DArray(this.height,this.width);
     };
 
-    loadBlock(objBlock: Block){
+    correctBlockPosition(objBlock: Block){
         if(objBlock.origin[0] + objBlock.move[0] < 0){objBlock.move[0] = 0};
         if(objBlock.origin[0] + objBlock.move[0] >= this.width){objBlock.move[0] = this.width - 1};
         const X: number = objBlock.origin[0] + objBlock.move[0];
@@ -72,8 +74,20 @@ export class Field {
         if(objBlock.origin[1] + objBlock.move[1] < 0){objBlock.move[1] = 0};
         if(objBlock.origin[1] + objBlock.move[1] >= this.height){objBlock.move[1] = this.height - 1};
         const Y: number = objBlock.origin[1] + objBlock.move[1];
+    };
 
-        this.entity = Generate2DArray(this.height,this.width);
-        this.entity[Y][X] = 6;
+    loadBlock(objBlock: Block){
+        this.loadspace.push(objBlock)
+    };
+
+    materialize(){
+        this.loadspace.forEach((block) => {
+            const x: number = block.origin[0] + block.move[0];
+            const y: number = block.origin[1] + block.move[1];
+
+            block.entity.forEach((row,rowNum) => {
+                row.forEach((value,colNum) => this.entity[y + rowNum][x + colNum] = value);
+            });
+        });
     };
 };
