@@ -17,33 +17,40 @@ const block = new Block_T;
 const field = new Field;
 field.loadBlock(block)
 
+process.stdout.write('\u001B[2J\u001B[0;0f');
+rl.write(Visualize2DArray(field.entity));
+
 process.stdin.on('keypress', (str, key) => {
-      if(key.ctrl == true && key.name == 'c'){
+
+
+  if(key.ctrl == true && key.name == 'c'){
           process.exit();
-      };
+  };
 
-      if(key.name == "w"){
-        block.spin();
-        field.loadBlock(block);
-      };
+  if(key.name == "w"){
+    block.up();
+    field.loadBlock(block);
+  };
 
-      if(key.name == "s"){
-        block.down()
-        field.loadBlock(block);
-      }
+  if(key.name == "s"){
+    block.down()
+    field.loadBlock(block);
+  };
 
-      if(key.name == "a"){
-        block.left();
-        field.loadBlock(block);
-      };
+  if(key.name == "a"){
+    block.left();
+    field.loadBlock(block);
+  };
 
-      if(key.name == "d"){
-        block.right();
-        field.loadBlock(block);
-      };
+  if(key.name == "d"){
+    block.right();
+    field.loadBlock(block);
+  };
 
-      process.stdout.write('\u001B[2J\u001B[0;0f');
-      readline.cursorTo(process.stdout,0,0);
+  process.stdout.write('\u001B[2J\u001B[0;0f');
+  readline.cursorTo(process.stdout,0,0);
 
-      rl.write(Visualize2DArray(field.entity));
+  rl.write(Visualize2DArray(field.entity));
+  rl.write(block.move[0].toString() + "," + block.move[1].toString());
+
 });

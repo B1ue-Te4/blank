@@ -7,6 +7,7 @@ interface Block {
     rotation: number;
 
     spin(): void;
+    up():void;
     down(): void;
     left(): void;
     right(): void;
@@ -44,6 +45,7 @@ export class Block_T implements Block {
         };
     };
 
+    up() {this.move[1] = this.move[1] -1 };
     down() {this.move[1] = this.move[1] + 1};
     left() {this.move[0] = this.move[0] - 1};
     right() {this.move[0] = this.move[0] + 1};
@@ -64,11 +66,11 @@ export class Field {
 
     loadBlock(objBlock: Block){
         if(objBlock.origin[0] + objBlock.move[0] < 0){objBlock.move[0] = 0};
-        if(objBlock.origin[0] + objBlock.move[0] > this.width){objBlock.move[0] = this.width - 1};
+        if(objBlock.origin[0] + objBlock.move[0] >= this.width){objBlock.move[0] = this.width - 1};
         const X: number = objBlock.origin[0] + objBlock.move[0];
 
         if(objBlock.origin[1] + objBlock.move[1] < 0){objBlock.move[1] = 0};
-        if(objBlock.origin[1] + objBlock.move[1] > this.height){objBlock.move[1] = this.height - 1};
+        if(objBlock.origin[1] + objBlock.move[1] >= this.height){objBlock.move[1] = this.height - 1};
         const Y: number = objBlock.origin[1] + objBlock.move[1];
 
         this.entity = Generate2DArray(this.height,this.width);
