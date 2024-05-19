@@ -11,7 +11,7 @@ interface Block {
     down(): void;
     left(): void;
     right(): void;
-}
+};
 
 export class Block_T implements Block {
     origin: number[];
@@ -24,7 +24,7 @@ export class Block_T implements Block {
         this.move = [0,0];
         this.entity = [[0,1,0],[1,1,1],[0,0,0]];
         this.rotation = 0;
-    }
+    };
 
     spin() {
         this.rotation = this.rotation + 1;
@@ -59,11 +59,21 @@ export class Field {
     entity: number[][];
 
     constructor() {
-        this.origin = [0,4];
-        this.width = 10;
-        this.height = 20;
+        this.origin = [4,0];
+        this.width = 12;
+        this.height = 22;
         this.loadspace = [];
         this.entity = Generate2DArray(this.height,this.width);
+        this.entity.forEach((eachRow) => {
+            eachRow[0] = 1;
+            eachRow[this.width - 1] = 1; 
+        });
+        this.entity[0].forEach((_, colNum, firstRow) => {
+            firstRow[colNum] = 1 
+        });
+        this.entity[this.height - 1].forEach((_, colNum, lastRow) => {
+            lastRow[colNum] = 1 
+        });
     };
 
     correctBlockPosition(objBlock: Block){
@@ -77,20 +87,24 @@ export class Field {
     };
 
     loadBlock(objBlock: Block){
-        this.loadspace.push(objBlock)
+        this.loadspace.push(objBlock);
     };
 
-    materialize(){
+    materialize(): number[][]{
+        let tempEntity: number[][] = this.entity
+
         this.loadspace.forEach((block) => {
             const x: number = this.origin[0] + block.origin[0] + block.move[0];
             const y: number = this.origin[1] + block.origin[1] + block.move[1];
 
-            block.entity.forEach((row,rowNum) => {
-                row.forEach((blockValue,colNum) => {
-                    const fieldValue = this.entity[y + rowNum][x + colNum];
-                    this.entity[y + rowNum][x + colNum] = fieldValue + blockValue;
+            block.entity.forEach((eachRow, rowNum) => {
+                eachRow.forEach((blockValue, colNum) => {
+                    const fieldValue = tempEntity[y + rowNum][x + colNum];
+                    tempEntity[y + rowNum][x + colNum] = fieldValue + blockValue;
                 });
             });
         });
+
+        return tempEntity;
     };
 };
