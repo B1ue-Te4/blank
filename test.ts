@@ -19,6 +19,7 @@ while (true) {
     block.down();
     field.materialize();
     rl.write(Visualize2DArray(field.entity));
+    console.log(Visualize2DArray(field.entity));
 }
 
 setInterval(() => {

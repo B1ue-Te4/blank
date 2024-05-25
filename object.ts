@@ -144,14 +144,16 @@ export class Field {
 
     materialize() {
         this.fieldInitialize()
-        
+
         this.loadspace.forEach((block) => {
             const x: number = this.origin[0] + block.origin[0] + block.move[0];
             const y: number = this.origin[1] + block.origin[1] + block.move[1];
 
             block.entity.forEach((eachRow, rowNum) => {
                 eachRow.forEach((blockValue, colNum) => {
-                    const fieldValue = this.entity[y + rowNum][x + colNum];
+                    if (y + rowNum > this.entity.length) return;
+                    if (x + colNum > this.entity[0].length) return;
+                    const fieldValue: number = this.entity[y + rowNum][x + colNum];
                     this.entity[y + rowNum][x + colNum] = fieldValue + blockValue;
                 });
             });
