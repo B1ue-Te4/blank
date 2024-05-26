@@ -29,7 +29,7 @@ export class Block_T implements Block {
         this.entity = [[0,1,0],[1,1,1],[0,0,0]];
         this.rotation = 0;
         this.locked = false;
-        this.lastmove = "";
+        this.lastmove = "new";
     }
 
     spin() {
@@ -87,9 +87,6 @@ export class Field {
             eachRow[0] = 1;
             eachRow[this.width - 1] = 1; 
         });
-        this.entity[0].forEach((_, colNum, firstRow) => {
-            firstRow[colNum] = 1 
-        });
         this.entity[this.height - 1].forEach((_, colNum, lastRow) => {
             lastRow[colNum] = 1 
         });
@@ -100,9 +97,6 @@ export class Field {
         this.entity.forEach((eachRow) => {
             eachRow[0] = 1;
             eachRow[this.width - 1] = 1; 
-        });
-        this.entity[0].forEach((_, colNum, firstRow) => {
-            firstRow[colNum] = 1 
         });
         this.entity[this.height - 1].forEach((_, colNum, lastRow) => {
             lastRow[colNum] = 1 
@@ -134,8 +128,18 @@ export class Field {
                 case "right":
                     lastBlock.left();
                     break;
+                case "new":
+                    break
             }
         }
+    }
+
+    checkClearLine() {
+        this.entity.forEach((eachRow,rowNum) => {
+            eachRow.forEach((value) => {
+                
+            })
+        })
     }
 
     loadBlock(objBlock: Block) {
