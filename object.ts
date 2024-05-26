@@ -118,8 +118,8 @@ export class Field {
     }
 
     checkBlockmove() {
-        if (this.checkInterfarence()){
-            const lastBlock: Block = this.loadspace[this.loadspace.length];
+        if (this.checkInterfarence() == true){
+            const lastBlock: Block = this.loadspace[this.loadspace.length - 1];
             switch (lastBlock.lastmove) {
                 case "up":
                     lastBlock.down();
@@ -151,8 +151,8 @@ export class Field {
 
             block.entity.forEach((eachRow, rowNum) => {
                 eachRow.forEach((blockValue, colNum) => {
-                    if (y + rowNum > this.entity.length) return;
-                    if (x + colNum > this.entity[0].length) return;
+                    if (y + rowNum > this.entity.length - 1) return;
+                    if (x + colNum > this.entity[0].length - 1) return;
                     const fieldValue: number = this.entity[y + rowNum][x + colNum];
                     this.entity[y + rowNum][x + colNum] = fieldValue + blockValue;
                 });
