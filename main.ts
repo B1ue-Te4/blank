@@ -61,4 +61,3 @@ setInterval(() => {
         field.loadBlock(currentBlock)
     }
 },16.7);
-
