@@ -103,7 +103,7 @@ export class Field {
         });
     }
 
-    checkInterfarence(): boolean {
+    checkInterference(): boolean {
         let intf: boolean = false;
         this.entity.forEach((eachRow) => {
             if (eachRow.includes(2)){intf = true}
@@ -112,7 +112,7 @@ export class Field {
     }
 
     checkBlockmove() {
-        if (this.checkInterfarence() == true){
+        if (this.checkInterference() == true){
             const lastBlock: Block = this.loadspace[this.loadspace.length - 1];
             switch (lastBlock.lastmove) {
                 case "up":
@@ -129,7 +129,7 @@ export class Field {
                     lastBlock.left();
                     break;
                 case "new":
-                    break
+                    break;
             }
         }
     }
@@ -147,7 +147,7 @@ export class Field {
     }
 
     materialize() {
-        this.fieldInitialize()
+        this.fieldInitialize();
 
         this.loadspace.forEach((block) => {
             const x: number = this.origin[0] + block.origin[0] + block.move[0];
