@@ -58,6 +58,6 @@ setInterval(() => {
 
     if(currentBlock.locked == true){
         currentBlock = new Block_T;
-        field.loadBlock(currentBlock)
+        field.loadBlock(currentBlock);
     }
 },16.7);
