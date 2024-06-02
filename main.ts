@@ -17,6 +17,8 @@ const field = new Field;
 let currentBlock = new Block_T;
 field.loadBlock(currentBlock)
 
+let blockInterval: number = 0;
+
 process.stdin.on('keypress', (str, key) => {
     if(key.ctrl == true && key.name == 'c'){
         process.exit();
@@ -24,15 +26,19 @@ process.stdin.on('keypress', (str, key) => {
     switch (key.name) {
         case "w":
             currentBlock.spin();
+            blockInterval = 0;
             break;
         case "s":
             currentBlock.down();
+            blockInterval = 0;
             break;
         case "a":
             currentBlock.left();
+            blockInterval = 0;
             break;
         case "d":
             currentBlock.right();
+            blockInterval = 0;
             break;
     }
 })
@@ -42,6 +48,13 @@ setInterval(() => {
     readline.cursorTo(process.stdout,0,0);
     field.materialize();
     rl.write(Visualize2DArray(field.entity)); 
+
+    blockInterval = blockInterval + 1;
+
+    if(blockInterval > 60){
+        currentBlock.down();
+        blockInterval = 0;
+    }
 
     if(currentBlock.locked == true){
         currentBlock = new Block_T;
