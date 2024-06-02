@@ -9,7 +9,7 @@ interface Block {
     lastmove: string;
 
     spin(): void;
-    up():void;
+    up(): void;
     down(): void;
     left(): void;
     right(): void;
@@ -99,7 +99,7 @@ export class Field {
             eachRow[this.width - 1] = 1; 
         });
         this.entity[this.height - 1].forEach((_, colNum, lastRow) => {
-            lastRow[colNum] = 1 
+            lastRow[colNum] = 1;
         });
     }
 
