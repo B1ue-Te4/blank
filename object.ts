@@ -164,5 +164,6 @@ export class Field {
         });
 
         this.checkBlockmove();
+        this.checkClearLine();
     }
 }
