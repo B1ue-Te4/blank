@@ -1,5 +1,5 @@
-export function Generate2DArray (m: number, n: number, val: number = 0): number[][] {
-    return [...Array(m)].map(_ => new Array(n).fill(val));
+export function GenerateEntity (m: number, n: number): number[][][] {
+    return [...Array(m)].map(_ => new Array(n).fill([0]));
 }
 
 export function Visualize2DArray (array2D: number[][]): string {

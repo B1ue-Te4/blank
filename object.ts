@@ -74,7 +74,7 @@ export class Field {
     width: number;
     height: number;
     loadspace: Block[];
-    entity: number[][];
+    entity: number[][][];
 
     constructor() {
         this.origin = [4,0];
@@ -162,7 +162,8 @@ export class Field {
                     if (y + rowNum > this.entity.length - 1) return;
                     if (x + colNum > this.entity[0].length - 1) return;
                     const fieldValue: number = this.entity[y + rowNum][x + colNum];
-                    this.entity[y + rowNum][x + colNum] = fieldValue + blockValue[0];
+                    blockValue[0] = blockValue[0] + fieldValue
+                    this.entity[y + rowNum][x + colNum] = blockValue;
                 });
             });
         });
