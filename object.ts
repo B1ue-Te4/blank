@@ -18,7 +18,7 @@ interface Block {
 export class Block_T implements Block {
     origin: number[];
     move: number[];
-    entity: number[][];
+    entity: number[][][];
     rotation: number;
     locked: boolean;
     lastmove: string;
@@ -26,7 +26,7 @@ export class Block_T implements Block {
     constructor() {
         this.origin = [0,0];
         this.move = [0,0];
-        this.entity = [[0,1,0],[1,1,1],[0,0,0]];
+        this.entity = [[[0],[1],[0]],[[1],[1],[1]],[[0],[0],[0]]];
         this.rotation = 0;
         this.locked = false;
         this.lastmove = "new";
@@ -37,16 +37,16 @@ export class Block_T implements Block {
         if (this.rotation > 3) {this.rotation = 0};
         switch (this.rotation) {
             case 0:
-                this.entity = [[0,1,0],[1,1,1],[0,0,0]];
+                this.entity = [[[0],[1],[0]],[[1],[1],[1]],[[0],[0],[0]]];
                 break;
             case 1:
-                this.entity = [[0,1,0],[0,1,1],[0,1,0]];
+                this.entity = [[[0],[1],[0]],[[0],[1],[1]],[[0],[1],[0]]];
                 break;
             case 2:
-                this.entity = [[0,0,0],[1,1,1],[0,1,0]];
+                this.entity = [[[0],[0],[0]],[[1],[1],[1]],[[0],[1],[0]]];
                 break;
             case 3:
-                this.entity = [[0,1,0],[1,1,0],[0,1,0]];
+                this.entity = [[[0],[1],[0]],[1,1,0],[0,1,0]];
                 break;
         }
     }
@@ -134,12 +134,16 @@ export class Field {
         }
     }
 
-    checkClearLine() {
+    checkClearLine(){
+        let filledRow: number[] = [];
         this.entity.forEach((eachRow,rowNum) => {
+            let lineSum: number = 0;
             eachRow.forEach((value) => {
-                
-            })
+                lineSum = lineSum + value;
+            });
+            if (lineSum > 12){filledRow.push(rowNum)};
         })
+        
     }
 
     loadBlock(objBlock: Block) {
