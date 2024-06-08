@@ -3,7 +3,6 @@ import { Visualize2DArray} from "./function";
 import { Block_T } from "./object";
 import { Field } from "./object";
 
-
 if (process.stdin.isTTY){process.stdin.setRawMode(true)};
 
 readline.emitKeypressEvents(process.stdin);

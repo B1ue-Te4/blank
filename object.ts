@@ -3,7 +3,7 @@ import { Generate2DArray } from "./function";
 interface Block {
     origin: number[];
     move: number[];
-    entity: number[][];
+    entity: number[][][];
     rotation: number;
     locked: boolean;
     lastmove: string;
@@ -46,7 +46,7 @@ export class Block_T implements Block {
                 this.entity = [[[0],[0],[0]],[[1],[1],[1]],[[0],[1],[0]]];
                 break;
             case 3:
-                this.entity = [[[0],[1],[0]],[1,1,0],[0,1,0]];
+                this.entity = [[[0],[1],[0]],[[1],[1],[0]],[[0],[1],[0]]];
                 break;
         }
     }
@@ -162,7 +162,7 @@ export class Field {
                     if (y + rowNum > this.entity.length - 1) return;
                     if (x + colNum > this.entity[0].length - 1) return;
                     const fieldValue: number = this.entity[y + rowNum][x + colNum];
-                    this.entity[y + rowNum][x + colNum] = fieldValue + blockValue;
+                    this.entity[y + rowNum][x + colNum] = fieldValue + blockValue[0];
                 });
             });
         });
