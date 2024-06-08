@@ -84,22 +84,22 @@ export class Field {
 
         this.entity = Generate2DArray(this.height,this.width);
         this.entity.forEach((eachRow) => {
-            eachRow[0] = 1;
-            eachRow[this.width - 1] = 1; 
+            eachRow[0][0] = 1;
+            eachRow[this.width - 1][0] = 1; 
         });
         this.entity[this.height - 1].forEach((_, colNum, lastRow) => {
-            lastRow[colNum] = 1;
+            lastRow[colNum][0] = 1;
         });
     }
 
     fieldInitialize() {
         this.entity = Generate2DArray(this.height,this.width);
         this.entity.forEach((eachRow) => {
-            eachRow[0] = 1;
-            eachRow[this.width - 1] = 1; 
+            eachRow[0][0] = 1;
+            eachRow[this.width - 1][0] = 1; 
         });
         this.entity[this.height - 1].forEach((_, colNum, lastRow) => {
-            lastRow[colNum] = 1;
+            lastRow[colNum][0] = 1;
         });
     }
 
@@ -139,7 +139,7 @@ export class Field {
         this.entity.forEach((eachRow,rowNum) => {
             let lineSum: number = 0;
             eachRow.forEach((value) => {
-                lineSum = lineSum + value;
+                lineSum = lineSum[0] + value[0];
             });
             if (lineSum > 12){filledRow.push(rowNum)};
         })
@@ -161,7 +161,7 @@ export class Field {
                 eachRow.forEach((blockValue, colNum) => {
                     if (y + rowNum > this.entity.length - 1) return;
                     if (x + colNum > this.entity[0].length - 1) return;
-                    const fieldValue: number = this.entity[y + rowNum][x + colNum];
+                    const fieldValue: number = this.entity[y + rowNum][x + colNum][0];
                     blockValue[0] = blockValue[0] + fieldValue
                     this.entity[y + rowNum][x + colNum] = blockValue;
                 });
