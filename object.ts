@@ -1,4 +1,4 @@
-import { Generate2DArray } from "./function";
+import { GenerateEntity } from "./function";
 
 interface Block {
     origin: number[];
@@ -82,7 +82,7 @@ export class Field {
         this.height = 22;
         this.loadspace = [];
 
-        this.entity = Generate2DArray(this.height,this.width);
+        this.entity = GenerateEntity(this.height, this.width);
         this.entity.forEach((eachRow) => {
             eachRow[0][0] = 1;
             eachRow[this.width - 1][0] = 1; 
@@ -93,7 +93,7 @@ export class Field {
     }
 
     fieldInitialize() {
-        this.entity = Generate2DArray(this.height,this.width);
+        this.entity = GenerateEntity(this.height, this.width);
         this.entity.forEach((eachRow) => {
             eachRow[0][0] = 1;
             eachRow[this.width - 1][0] = 1; 
@@ -106,7 +106,9 @@ export class Field {
     checkInterference(): boolean {
         let intf: boolean = false;
         this.entity.forEach((eachRow) => {
-            if (eachRow.includes(2)){intf = true}
+            eachRow.forEach((value) => {
+                if (value[0] = 2){intf = true}
+            });
         });
         return intf;
     }
@@ -139,7 +141,7 @@ export class Field {
         this.entity.forEach((eachRow,rowNum) => {
             let lineSum: number = 0;
             eachRow.forEach((value) => {
-                lineSum = lineSum[0] + value[0];
+                lineSum = lineSum + value[0];
             });
             if (lineSum > 12){filledRow.push(rowNum)};
         })
