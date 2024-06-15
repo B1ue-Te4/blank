@@ -73,14 +73,14 @@ export class Field {
     origin: number[];
     width: number;
     height: number;
-    loadspace: Block[];
+    blockmemory: Block[];
     entity: number[][][];
 
     constructor() {
         this.origin = [4,0];
         this.width = 12;
         this.height = 22;
-        this.loadspace = [];
+        this.blockmemory = [];
 
         this.entity = GenerateEntity(this.height, this.width);
         this.entity.forEach((eachRow) => {
@@ -113,30 +113,28 @@ export class Field {
         return intf;
     }
 
-    checkBlockmove() {
-        if (this.checkInterference() == true){
-            const lastBlock: Block = this.loadspace[this.loadspace.length - 1];
-            switch (lastBlock.lastmove) {
-                case "up":
-                    lastBlock.down();
-                    break;
-                case "down":
-                    lastBlock.up();
-                    lastBlock.locked = true;
-                    break;
-                case "left":
-                    lastBlock.right();
-                    break;
-                case "right":
-                    lastBlock.left();
-                    break;
-                case "new":
-                    break;
-            }
+    cancelBlockmove() {
+        const lastBlock: Block = this.blockmemory[this.blockmemory.length - 1];
+        switch (lastBlock.lastmove) {
+            case "up":
+                lastBlock.down();
+                break;
+            case "down":
+                lastBlock.up();
+                lastBlock.locked = true;
+                break;
+            case "left":
+                lastBlock.right();
+                break;
+            case "right":
+                lastBlock.left();
+                break;
+            case "new":
+                break;
         }
     }
 
-    checkClearLine(){
+    clearLineCheck(){
         let filledRow: number[] = [];
         this.entity.forEach((eachRow,rowNum) => {
             let lineSum: number = 0;
@@ -145,32 +143,52 @@ export class Field {
             });
             if (lineSum > 12){filledRow.push(rowNum)};
         })
-        
+        if (filledRow.length > 0){
+            filledRow.forEach((tgtRow) => {
+                this.entity[tgtRow].forEach((value) => {
+                    value[0] = 0;
+                })
+            })
+        }
+    }
+
+    clearBlockCheck(){
+        this.blockmemory.forEach((eachBlock) => {
+            let isBlockEmpty: boolean = true;
+            eachBlock.entity.forEach((eachRow) => {
+                eachRow.forEach((value) => {
+                    if(value[0] = 1){isBlockEmpty = false}
+                })
+            })
+        })
     }
 
     loadBlock(objBlock: Block) {
-        this.loadspace.push(objBlock);
+        this.blockmemory.push(objBlock);
     }
 
     materialize() {
         this.fieldInitialize();
 
-        this.loadspace.forEach((block) => {
-            const x: number = this.origin[0] + block.origin[0] + block.move[0];
-            const y: number = this.origin[1] + block.origin[1] + block.move[1];
+        this.blockmemory.forEach((block) => {
+            const blockX: number = this.origin[0] + block.origin[0] + block.move[0];
+            const blockY: number = this.origin[1] + block.origin[1] + block.move[1];
 
             block.entity.forEach((eachRow, rowNum) => {
                 eachRow.forEach((blockValue, colNum) => {
-                    if (y + rowNum > this.entity.length - 1) return;
-                    if (x + colNum > this.entity[0].length - 1) return;
-                    const fieldValue: number = this.entity[y + rowNum][x + colNum][0];
-                    blockValue[0] = blockValue[0] + fieldValue
-                    this.entity[y + rowNum][x + colNum] = blockValue;
+                    if (blockX + rowNum > this.height) return;
+                    if (blockY + colNum > this.width) return;
+                    if (this.entity[blockY + rowNum][blockX + colNum][0] = 0){
+                        this.entity[blockY + rowNum][blockX + colNum]= blockValue;
+                    } else {
+                        this.cancelBlockmove();
+                    }
+                    
                 });
             });
         });
 
-        this.checkBlockmove();
-        this.checkClearLine();
+        this.clearLineCheck();
+        this.clearBlockCheck();
     }
 }
