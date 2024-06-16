@@ -1,7 +1,7 @@
 import readline from "readline";
-import { VisualizeEntity } from "./function";
-import { Block_T } from "./object";
-import { Field } from "./object";
+import { VisualizeEntity } from "./functions";
+import { Block_T } from "./objects";
+import { Field } from "./objects";
 
 if (process.stdin.isTTY){process.stdin.setRawMode(true)};
 

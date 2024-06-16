@@ -1,4 +1,7 @@
-import { GenerateEntity } from './function';
+import { GenerateEntity } from './functions';
+import { CHARS } from './consts';
+
+CHARS.FIELD
 
 interface Block {
     origin: number[];
@@ -26,7 +29,7 @@ export class Block_T implements Block {
     constructor() {
         this.origin = [0,0];
         this.move = [0,0];
-        this.entity = [[[' '],['■'],[' ']],[['■'],['■'],['■']],[[' '],[' '],[' ']]];
+        this.entity = [[[CHARS.FIELD],[CHARS.BLOCK],[CHARS.FIELD]],[[CHARS.BLOCK],[CHARS.BLOCK],[CHARS.BLOCK]],[[CHARS.FIELD],[CHARS.FIELD],[CHARS.FIELD]]];
         this.rotation = 0;
         this.locked = false;
         this.lastmove = 'new';
@@ -37,16 +40,16 @@ export class Block_T implements Block {
         if (this.rotation > 3) {this.rotation = 0};
         switch (this.rotation) {
             case 0:
-                this.entity = [[[' '],['■'],[' ']],[['■'],['■'],['■']],[[' '],[' '],[' ']]];
+                this.entity = [[[CHARS.FIELD],[CHARS.BLOCK],[CHARS.FIELD]],[[CHARS.BLOCK],[CHARS.BLOCK],[CHARS.BLOCK]],[[CHARS.FIELD],[CHARS.FIELD],[CHARS.FIELD]]];
                 break;
             case 1:
-                this.entity = [[[' '],['■'],[' ']],[[' '],['■'],['■']],[[' '],['■'],[' ']]];
+                this.entity = [[[CHARS.FIELD],[CHARS.BLOCK],[CHARS.FIELD]],[[CHARS.FIELD],[CHARS.BLOCK],[CHARS.BLOCK]],[[CHARS.FIELD],[CHARS.BLOCK],[CHARS.FIELD]]];
                 break;
             case 2:
-                this.entity = [[[' '],[' '],[' ']],[['■'],['■'],['■']],[[' '],['■'],[' ']]];
+                this.entity = [[[CHARS.FIELD],[CHARS.FIELD],[CHARS.FIELD]],[[CHARS.BLOCK],[CHARS.BLOCK],[CHARS.BLOCK]],[[CHARS.FIELD],[CHARS.BLOCK],[CHARS.FIELD]]];
                 break;
             case 3:
-                this.entity = [[[' '],['■'],[' ']],[['■'],['■'],[' ']],[[' '],['■'],[' ']]];
+                this.entity = [[[CHARS.FIELD],[CHARS.BLOCK],[CHARS.FIELD]],[[CHARS.BLOCK],[CHARS.BLOCK],[CHARS.FIELD]],[[CHARS.FIELD],[CHARS.BLOCK],[CHARS.FIELD]]];
                 break;
         }
     }
@@ -79,27 +82,27 @@ export class Field {
     constructor() {
         this.origin = [4,0];
         this.width = 12;
-        this.height = 22;
+        this.height = 21;
         this.blockmemory = [];
 
         this.entity = GenerateEntity(this.height, this.width);
         this.entity.forEach((eachRow) => {
-            eachRow[0][0] = '■';
-            eachRow[this.width - 1][0] = '■'; 
+            eachRow[0][0] = CHARS.WALL;
+            eachRow[this.width - 1][0] = CHARS.WALL; 
         });
         this.entity[this.height - 1].forEach((_, colNum, lastRow) => {
-            lastRow[colNum][0] = '■';
+            lastRow[colNum][0] = CHARS.BOTTOM;
         });
     }
 
     fieldInitialize() {
         this.entity = GenerateEntity(this.height, this.width);
         this.entity.forEach((eachRow) => {
-            eachRow[0][0] = '■';
-            eachRow[this.width - 1][0] = '■'; 
+            eachRow[0][0] = CHARS.WALL;
+            eachRow[this.width - 1][0] = CHARS.WALL; 
         });
         this.entity[this.height - 1].forEach((_, colNum, lastRow) => {
-            lastRow[colNum][0] = '■';
+            lastRow[colNum][0] = CHARS.BOTTOM;
         });
     }
 
@@ -129,14 +132,14 @@ export class Field {
         this.entity.forEach((eachRow,rowNum) => {
             let isFilled: boolean = true;
             eachRow.forEach((value) => {
-                if(value[0] == " "){isFilled = false}
+                if(value[0] == CHARS.FIELD){isFilled = false}
             });
             if (isFilled){filledRow.push(rowNum);}
         });
         if (filledRow.length > 0){
             filledRow.forEach((rowNum) => {
                 this.entity[rowNum].forEach((value) => {
-                    value[0] = ' ';
+                    value[0] = CHARS.FIELD;
                 });
             });
         }
@@ -148,7 +151,7 @@ export class Field {
             let isBlockEmpty: boolean = true;
             eachBlock.entity.forEach((eachRow) => {
                 eachRow.forEach((value) => {
-                    if(value[0] == '■'){isBlockEmpty = false;}
+                    if(value[0] == CHARS.BLOCK){isBlockEmpty = false;}
                 });
             });
             if(!isBlockEmpty){notEmptyBlocksArray.push(eachBlock);}
@@ -171,7 +174,7 @@ export class Field {
                 eachRow.forEach((blockValue, colNum) => {
                     if (blockX + rowNum > this.height) return;
                     if (blockY + colNum > this.width) return;
-                    if (this.entity[blockY + rowNum][blockX + colNum][0] = ' '){
+                    if (this.entity[blockY + rowNum][blockX + colNum][0] = CHARS.FIELD){
                         this.entity[blockY + rowNum][blockX + colNum]= blockValue;
                     } else {
                         this.cancelBlockmove();
