@@ -1,8 +1,6 @@
 import { GenerateEntity } from './functions';
 import { CHARS } from './consts';
 
-CHARS.FIELD
-
 interface Block {
     origin: number[];
     move: number[];
@@ -130,11 +128,11 @@ export class Field {
     clearLineCheck(){
         let filledRow: number[] = [];
         this.entity.forEach((eachRow,rowNum) => {
-            let isFilled: boolean = true;
+            let blockSum: number = 0;
             eachRow.forEach((value) => {
-                if(value[0] == CHARS.FIELD){isFilled = false}
+                if(value[0] == CHARS.BLOCK){blockSum = blockSum + 1}
             });
-            if (isFilled){filledRow.push(rowNum);}
+            if (blockSum >= 10){filledRow.push(rowNum);}
         });
         if (filledRow.length > 0){
             filledRow.forEach((rowNum) => {
@@ -146,17 +144,17 @@ export class Field {
     }
 
     clearBlockCheck(){
-        let notEmptyBlocksArray: Block[] = [];
+        let existBlockArray: Block[] = [];
         this.blockmemory.forEach((eachBlock) => {
-            let isBlockEmpty: boolean = true;
+            let isBlockExist: boolean = false;
             eachBlock.entity.forEach((eachRow) => {
                 eachRow.forEach((value) => {
-                    if(value[0] == CHARS.BLOCK){isBlockEmpty = false;}
+                    if(value[0] == CHARS.BLOCK){isBlockExist = true;}
                 });
             });
-            if(!isBlockEmpty){notEmptyBlocksArray.push(eachBlock);}
+            if(isBlockExist){existBlockArray.push(eachBlock);}
         });
-        this.blockmemory = notEmptyBlocksArray;
+        this.blockmemory = existBlockArray;
     }
 
     loadBlock(objBlock: Block) {
@@ -172,9 +170,9 @@ export class Field {
 
             block.entity.forEach((eachRow, rowNum) => {
                 eachRow.forEach((blockValue, colNum) => {
-                    if (blockX + rowNum > this.height) return;
-                    if (blockY + colNum > this.width) return;
-                    if (!this.entity[blockY + rowNum][blockX + colNum][0] = CHARS.FIELD){
+                    if (blockX + colNum > this.height) return;
+                    if (blockY + rowNum > this.width) return;
+                    if (this.entity[blockY + rowNum][blockX + colNum][0] = CHARS.FIELD){
                         this.entity[blockY + rowNum][blockX + colNum]= blockValue;
                     } else {
                         this.cancelBlockmove();
