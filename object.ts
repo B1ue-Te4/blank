@@ -107,7 +107,7 @@ export class Field {
         let intf: boolean = false;
         this.entity.forEach((eachRow) => {
             eachRow.forEach((value) => {
-                if (value[0] = 2){intf = true}
+                if (value[0] = 2){intf = true;}
             });
         });
         return intf;
@@ -141,14 +141,14 @@ export class Field {
             eachRow.forEach((value) => {
                 lineSum = lineSum + value[0];
             });
-            if (lineSum > 12){filledRow.push(rowNum)};
-        })
+            if (lineSum > 12){filledRow.push(rowNum);}
+        });
         if (filledRow.length > 0){
             filledRow.forEach((tgtRow) => {
                 this.entity[tgtRow].forEach((value) => {
                     value[0] = 0;
-                })
-            })
+                });
+            });
         }
     }
 
@@ -158,11 +158,11 @@ export class Field {
             let isBlockEmpty: boolean = true;
             eachBlock.entity.forEach((eachRow) => {
                 eachRow.forEach((value) => {
-                    if(value[0] = 1){isBlockEmpty = false}
-                })
-            })
-            if(!isBlockEmpty){notEmptyBlocksArray.push(eachBlock)}
-        })
+                    if(value[0] = 1){isBlockEmpty = false;}
+                });
+            });
+            if(!isBlockEmpty){notEmptyBlocksArray.push(eachBlock);}
+        });
         this.blockmemory = notEmptyBlocksArray;
     }
 
@@ -186,7 +186,6 @@ export class Field {
                     } else {
                         this.cancelBlockmove();
                     }
-                    
                 });
             });
         });
