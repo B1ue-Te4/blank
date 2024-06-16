@@ -1,6 +1,6 @@
 export const CHARS = {
     FIELD: '.',
     WALL: '|',
-    BOTTOM: '—',
+    BOTTOM: '-',
     BLOCK: '■'
 }

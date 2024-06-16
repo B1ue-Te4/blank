@@ -90,8 +90,8 @@ export class Field {
             eachRow[0][0] = CHARS.WALL;
             eachRow[this.width - 1][0] = CHARS.WALL; 
         });
-        this.entity[this.height - 1].forEach((_, colNum, lastRow) => {
-            lastRow[colNum][0] = CHARS.BOTTOM;
+        this.entity[this.height - 1].forEach((lastRow) => {
+            lastRow[0] = CHARS.BOTTOM;
         });
     }
 
@@ -101,8 +101,8 @@ export class Field {
             eachRow[0][0] = CHARS.WALL;
             eachRow[this.width - 1][0] = CHARS.WALL; 
         });
-        this.entity[this.height - 1].forEach((_, colNum, lastRow) => {
-            lastRow[colNum][0] = CHARS.BOTTOM;
+        this.entity[this.height - 1].forEach((lastRow) => {
+            lastRow[0] = CHARS.BOTTOM;
         });
     }
 
@@ -174,7 +174,7 @@ export class Field {
                 eachRow.forEach((blockValue, colNum) => {
                     if (blockX + rowNum > this.height) return;
                     if (blockY + colNum > this.width) return;
-                    if (this.entity[blockY + rowNum][blockX + colNum][0] = CHARS.FIELD){
+                    if (!this.entity[blockY + rowNum][blockX + colNum][0] = CHARS.FIELD){
                         this.entity[blockY + rowNum][blockX + colNum]= blockValue;
                     } else {
                         this.cancelBlockmove();
