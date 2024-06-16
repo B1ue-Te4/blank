@@ -1,13 +1,13 @@
-export function GenerateEntity (m: number, n: number): number[][][] {
-    return [...Array(m)].map(_ => new Array(n).fill([0]));
+export function GenerateEntity (m: number, n: number, val = ' '): string[][][] {
+    return Array.from(new Array(m), _ => new Array(n).fill(new Array(1).fill(val)));
 }
 
-export function Visualize2DArray (array2D: number[][]): string {
+export function VisualizeEntity (entity: string[][][]): string {
     let mapped: string = "";
 
-    array2D.forEach((value) => {
-        value.forEach(value => {
-            mapped = mapped + value
+    entity.forEach((eachRow) => {
+        eachRow.forEach(value => {
+            mapped = mapped + value[0];
         });
 
         mapped = mapped + "\n";

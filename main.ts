@@ -1,5 +1,5 @@
 import readline from "readline";
-import { Visualize2DArray} from "./function";
+import { VisualizeEntity } from "./function";
 import { Block_T } from "./object";
 import { Field } from "./object";
 
@@ -46,7 +46,7 @@ setInterval(() => {
     process.stdout.write('\u001B[2J\u001B[0;0f');
     readline.cursorTo(process.stdout,0,0);
     field.materialize();
-    rl.write(Visualize2DArray(field.entity)); 
+    rl.write(VisualizeEntity(field.entity)); 
 
     blockInterval = blockInterval + 1;
 

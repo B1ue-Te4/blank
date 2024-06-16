@@ -1,7 +1,9 @@
-let we1 = [['oops']]
-let we2 = [we1[0]]
+import readline from "readline";
+import { VisualizeEntity } from "./function";
+import { Block_T } from "./object";
+import { Field } from "./object";
 
-we2[0][0] = 'ouch'
+const field = new Field;
+field.entity[0][0][0] = 'yes'
 
-console.log(we1[0][0])
-console.log(we2[0][0])
+console.log(VisualizeEntity(field.entity))

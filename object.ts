@@ -1,9 +1,9 @@
-import { GenerateEntity } from "./function";
+import { GenerateEntity } from './function';
 
 interface Block {
     origin: number[];
     move: number[];
-    entity: number[][][];
+    entity: string[][][];
     rotation: number;
     locked: boolean;
     lastmove: string;
@@ -18,7 +18,7 @@ interface Block {
 export class Block_T implements Block {
     origin: number[];
     move: number[];
-    entity: number[][][];
+    entity: string[][][];
     rotation: number;
     locked: boolean;
     lastmove: string;
@@ -26,10 +26,10 @@ export class Block_T implements Block {
     constructor() {
         this.origin = [0,0];
         this.move = [0,0];
-        this.entity = [[[0],[1],[0]],[[1],[1],[1]],[[0],[0],[0]]];
+        this.entity = [[[' '],['■'],[' ']],[['■'],['■'],['■']],[[' '],[' '],[' ']]];
         this.rotation = 0;
         this.locked = false;
-        this.lastmove = "new";
+        this.lastmove = 'new';
     }
 
     spin() {
@@ -37,35 +37,35 @@ export class Block_T implements Block {
         if (this.rotation > 3) {this.rotation = 0};
         switch (this.rotation) {
             case 0:
-                this.entity = [[[0],[1],[0]],[[1],[1],[1]],[[0],[0],[0]]];
+                this.entity = [[[' '],['■'],[' ']],[['■'],['■'],['■']],[[' '],[' '],[' ']]];
                 break;
             case 1:
-                this.entity = [[[0],[1],[0]],[[0],[1],[1]],[[0],[1],[0]]];
+                this.entity = [[[' '],['■'],[' ']],[[' '],['■'],['■']],[[' '],['■'],[' ']]];
                 break;
             case 2:
-                this.entity = [[[0],[0],[0]],[[1],[1],[1]],[[0],[1],[0]]];
+                this.entity = [[[' '],[' '],[' ']],[['■'],['■'],['■']],[[' '],['■'],[' ']]];
                 break;
             case 3:
-                this.entity = [[[0],[1],[0]],[[1],[1],[0]],[[0],[1],[0]]];
+                this.entity = [[[' '],['■'],[' ']],[['■'],['■'],[' ']],[[' '],['■'],[' ']]];
                 break;
         }
     }
 
     up() {
         this.move[1] = this.move[1] - 1;
-        this.lastmove = "up";
+        this.lastmove = 'up';
     }
     down() {
         this.move[1] = this.move[1] + 1;
-        this.lastmove = "down";
+        this.lastmove = 'down';
     }
     left() {
         this.move[0] = this.move[0] - 1;
-        this.lastmove = "left";
+        this.lastmove = 'left';
     }
     right() {
         this.move[0] = this.move[0] + 1;
-        this.lastmove = "right";
+        this.lastmove = 'right';
     }
 }
 
@@ -74,7 +74,7 @@ export class Field {
     width: number;
     height: number;
     blockmemory: Block[];
-    entity: number[][][];
+    entity: string[][][];
 
     constructor() {
         this.origin = [4,0];
@@ -84,52 +84,42 @@ export class Field {
 
         this.entity = GenerateEntity(this.height, this.width);
         this.entity.forEach((eachRow) => {
-            eachRow[0][0] = 1;
-            eachRow[this.width - 1][0] = 1; 
+            eachRow[0][0] = '■';
+            eachRow[this.width - 1][0] = '■'; 
         });
         this.entity[this.height - 1].forEach((_, colNum, lastRow) => {
-            lastRow[colNum][0] = 1;
+            lastRow[colNum][0] = '■';
         });
     }
 
     fieldInitialize() {
         this.entity = GenerateEntity(this.height, this.width);
         this.entity.forEach((eachRow) => {
-            eachRow[0][0] = 1;
-            eachRow[this.width - 1][0] = 1; 
+            eachRow[0][0] = '■';
+            eachRow[this.width - 1][0] = '■'; 
         });
         this.entity[this.height - 1].forEach((_, colNum, lastRow) => {
-            lastRow[colNum][0] = 1;
+            lastRow[colNum][0] = '■';
         });
-    }
-
-    checkInterference(): boolean {
-        let intf: boolean = false;
-        this.entity.forEach((eachRow) => {
-            eachRow.forEach((value) => {
-                if (value[0] = 2){intf = true;}
-            });
-        });
-        return intf;
     }
 
     cancelBlockmove() {
         const lastBlock: Block = this.blockmemory[this.blockmemory.length - 1];
         switch (lastBlock.lastmove) {
-            case "up":
+            case 'up':
                 lastBlock.down();
                 break;
-            case "down":
+            case 'down':
                 lastBlock.up();
                 lastBlock.locked = true;
                 break;
-            case "left":
+            case 'left':
                 lastBlock.right();
                 break;
-            case "right":
+            case 'right':
                 lastBlock.left();
                 break;
-            case "new":
+            case 'new':
                 break;
         }
     }
@@ -137,16 +127,16 @@ export class Field {
     clearLineCheck(){
         let filledRow: number[] = [];
         this.entity.forEach((eachRow,rowNum) => {
-            let lineSum: number = 0;
+            let isFilled: boolean = true;
             eachRow.forEach((value) => {
-                lineSum = lineSum + value[0];
+                if(value[0] == " "){isFilled = false}
             });
-            if (lineSum > 12){filledRow.push(rowNum);}
+            if (isFilled){filledRow.push(rowNum);}
         });
         if (filledRow.length > 0){
-            filledRow.forEach((tgtRow) => {
-                this.entity[tgtRow].forEach((value) => {
-                    value[0] = 0;
+            filledRow.forEach((rowNum) => {
+                this.entity[rowNum].forEach((value) => {
+                    value[0] = ' ';
                 });
             });
         }
@@ -158,7 +148,7 @@ export class Field {
             let isBlockEmpty: boolean = true;
             eachBlock.entity.forEach((eachRow) => {
                 eachRow.forEach((value) => {
-                    if(value[0] = 1){isBlockEmpty = false;}
+                    if(value[0] == '■'){isBlockEmpty = false;}
                 });
             });
             if(!isBlockEmpty){notEmptyBlocksArray.push(eachBlock);}
@@ -181,7 +171,7 @@ export class Field {
                 eachRow.forEach((blockValue, colNum) => {
                     if (blockX + rowNum > this.height) return;
                     if (blockY + colNum > this.width) return;
-                    if (this.entity[blockY + rowNum][blockX + colNum][0] = 0){
+                    if (this.entity[blockY + rowNum][blockX + colNum][0] = ' '){
                         this.entity[blockY + rowNum][blockX + colNum]= blockValue;
                     } else {
                         this.cancelBlockmove();
