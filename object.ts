@@ -153,6 +153,7 @@ export class Field {
     }
 
     clearBlockCheck(){
+        let notEmptyBlocksArray: Block[] = [];
         this.blockmemory.forEach((eachBlock) => {
             let isBlockEmpty: boolean = true;
             eachBlock.entity.forEach((eachRow) => {
@@ -160,7 +161,9 @@ export class Field {
                     if(value[0] = 1){isBlockEmpty = false}
                 })
             })
+            if(!isBlockEmpty){notEmptyBlocksArray.push(eachBlock)}
         })
+        this.blockmemory = notEmptyBlocksArray;
     }
 
     loadBlock(objBlock: Block) {
