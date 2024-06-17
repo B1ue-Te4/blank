@@ -76,6 +76,8 @@ export class Field {
     height: number;
     blockmemory: Block[];
     entity: string[][][];
+    score: number;
+    gameover: boolean;
 
     constructor() {
         this.origin = [4,0];
@@ -91,6 +93,9 @@ export class Field {
         this.entity[this.height - 1].forEach((lastRow) => {
             lastRow[0] = CHARS.BOTTOM;
         });
+
+        this.score = 0;
+        this.gameover = false;
     }
 
     fieldInitialize() {
@@ -113,6 +118,7 @@ export class Field {
             case 'down':
                 lastBlock.up();
                 lastBlock.locked = true;
+                if (lastBlock.move[1] <= 0){this.gameover = true}
                 break;
             case 'left':
                 lastBlock.right();
@@ -125,7 +131,7 @@ export class Field {
         }
     }
 
-    clearLineCheck(){
+    checkClearLine(){
         let filledRow: number[] = [];
         this.entity.forEach((eachRow,rowNum) => {
             let blockSum: number = 0;
@@ -141,9 +147,10 @@ export class Field {
                 });
             });
         }
+        this.score = this.score + filledRow.length
     }
 
-    clearBlockCheck(){
+    checkClearBlock(){
         let existBlockArray: Block[] = [];
         this.blockmemory.forEach((eachBlock) => {
             let isBlockExist: boolean = false;
@@ -169,19 +176,27 @@ export class Field {
             const blockY: number = this.origin[1] + block.origin[1] + block.move[1];
 
             block.entity.forEach((eachRow, rowNum) => {
+                let isMoveCancel: boolean = false
                 eachRow.forEach((blockValue, colNum) => {
-                    if (blockX + colNum > this.height) return;
-                    if (blockY + rowNum > this.width) return;
-                    if (this.entity[blockY + rowNum][blockX + colNum][0] = CHARS.FIELD){
+                    if (blockX + colNum > this.width) return;
+                    if (blockY + rowNum > this.height) return;
+                    if (blockValue[0] == CHARS.BLOCK && 
+                        this.entity[blockY + rowNum][blockX + colNum][0] == CHARS.FIELD){
                         this.entity[blockY + rowNum][blockX + colNum]= blockValue;
-                    } else {
-                        this.cancelBlockmove();
+                    } else if (blockValue[0] == CHARS.BLOCK &&
+                                !(this.entity[blockY + rowNum][blockX + colNum][0] == CHARS.FIELD)
+                    ){
+                        isMoveCancel = true;
+                    }
+                    else {
+                        ;
                     }
                 });
+                if(isMoveCancel){this.cancelBlockmove()}
             });
         });
 
-        this.clearLineCheck();
-        this.clearBlockCheck();
+        this.checkClearLine();
+        this.checkClearBlock();
     }
 }

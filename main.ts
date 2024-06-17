@@ -42,11 +42,18 @@ process.stdin.on('keypress', (str, key) => {
     }
 })
 
-setInterval(() => {
+const intervalID = setInterval(() => {
     process.stdout.write('\u001B[2J\u001B[0;0f');
     readline.cursorTo(process.stdout,0,0);
     field.materialize();
     rl.write(VisualizeEntity(field.entity)); 
+
+    if (field.gameover == true){
+        clearInterval(intervalID);
+        process.stdout.write('\u001B[2J\u001B[0;0f');
+        readline.cursorTo(process.stdout,0,0);
+        rl.write('GameOver...');
+    }
 
     blockInterval = blockInterval + 1;
 
